@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,59 +8,79 @@ import { CommonModule } from '@angular/common';
   templateUrl: './tech-background.component.html',
   styleUrls: ['./tech-background.component.css']
 })
-export class TechBackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() variant: string = 'default';
+export class TechBackgroundComponent implements AfterViewInit, OnDestroy {
+  @Input() variant: 'default' | 'worldmap' = 'default';
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   
   private animationFrameId?: number;
-  private particles: Particle[] = [];
+  private nodes: Node[] = [];
   private ctx?: CanvasRenderingContext2D | null;
-
-  ngOnInit() {
-    // Initialize particles
-    this.initParticles();
-  }
+  private resizeHandler?: () => void;
 
   ngAfterViewInit() {
-    if (this.canvasRef) {
-      const canvas = this.canvasRef.nativeElement;
-      this.ctx = canvas.getContext('2d');
-      this.resizeCanvas();
-      this.animate();
-      
-      // Handle window resize
-      window.addEventListener('resize', this.resizeCanvas.bind(this));
-    }
+    const canvas = this.canvasRef?.nativeElement;
+    if (!canvas) return;
+
+    this.ctx = canvas.getContext('2d');
+    if (!this.ctx) return;
+
+    // Set canvas size
+    this.setCanvasSize();
+
+    // Create resize handler
+    this.resizeHandler = () => this.setCanvasSize();
+    window.addEventListener('resize', this.resizeHandler);
+
+    // Initialize network nodes
+    this.initNodes();
+
+    // Start animation
+    this.animate();
   }
 
   ngOnDestroy() {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    window.removeEventListener('resize', this.resizeCanvas.bind(this));
-  }
-
-  private initParticles() {
-    // Use more particles for better visual effect
-    const particleCount = this.variant === 'worldmap' ? 120 : 100;
-    this.particles = [];
-    
-    for (let i = 0; i < particleCount; i++) {
-      this.particles.push({
-        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-        y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-        vx: (Math.random() - 0.5) * (this.variant === 'worldmap' ? 0.2 : 0.3),
-        vy: (Math.random() - 0.5) * (this.variant === 'worldmap' ? 0.2 : 0.3),
-        radius: Math.random() * 2 + 1
-      });
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
     }
   }
 
-  private resizeCanvas() {
-    if (this.canvasRef) {
-      const canvas = this.canvasRef.nativeElement;
+  private setCanvasSize() {
+    const canvas = this.canvasRef?.nativeElement;
+    if (canvas) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    }
+  }
+
+  private initNodes() {
+    const canvas = this.canvasRef?.nativeElement;
+    if (!canvas) return;
+
+    this.nodes = [];
+    const nodeCount = this.variant === 'worldmap' ? 80 : 60;
+
+    // Define spawn area - starting from outside the screen (negative values)
+    const spawnAreaWidth = 200; // Width of spawn area
+    const spawnAreaHeight = 200; // Height of spawn area
+
+    for (let i = 0; i < nodeCount; i++) {
+      // Start nodes outside the screen (negative positions for top-left)
+      const x = -spawnAreaWidth + Math.random() * spawnAreaWidth;
+      const y = -spawnAreaHeight + Math.random() * spawnAreaHeight;
+
+      // Create velocity that tends to spread outward (right and down) - very slow speed
+      const vx = 0.05 + Math.random() * 0.08; // Very slow positive velocity (moving right)
+      const vy = 0.05 + Math.random() * 0.08; // Very slow positive velocity (moving down)
+
+      this.nodes.push({
+        x: x,
+        y: y,
+        vx: vx,
+        vy: vy,
+      });
     }
   }
 
@@ -70,49 +90,68 @@ export class TechBackgroundComponent implements OnInit, AfterViewInit, OnDestroy
     const canvas = this.canvasRef.nativeElement;
     const ctx = this.ctx;
 
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Create fade effect instead of clearing
+    ctx.fillStyle = 'rgba(10, 22, 40, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Update and draw particles
-    this.particles.forEach((particle, i) => {
-      // Update position
-      particle.x += particle.vx;
-      particle.y += particle.vy;
+    // Update and draw nodes
+    this.nodes.forEach((node, i) => {
+      // Move nodes
+      node.x += node.vx;
+      node.y += node.vy;
 
-      // Wrap around screen
-      if (particle.x < 0) particle.x = canvas.width;
-      if (particle.x > canvas.width) particle.x = 0;
-      if (particle.y < 0) particle.y = canvas.height;
-      if (particle.y > canvas.height) particle.y = 0;
+      // Bounce off right and bottom edges, wrap around for top and left
+      if (node.x > canvas.width) {
+        node.vx *= -1;
+        node.x = canvas.width;
+      }
+      if (node.y > canvas.height) {
+        node.vy *= -1;
+        node.y = canvas.height;
+      }
+      
+      // Allow nodes to enter from outside (don't bounce at top-left)
+      // Only keep nodes that have entered or are still coming in
+      if (node.x < -300 || node.y < -300) {
+        // Reset node to spawn position if it goes too far out
+        node.x = -Math.random() * 200;
+        node.y = -Math.random() * 200;
+        node.vx = 0.05 + Math.random() * 0.08;
+        node.vy = 0.05 + Math.random() * 0.08;
+      }
 
-      // Draw particle with glow effect
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(212, 175, 55, 0.8)';
-      ctx.fill();
+      // Draw connections to other nodes
+      this.nodes.forEach((otherNode, j) => {
+        if (i === j) return;
 
-      // Add glow
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.radius + 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(212, 175, 55, 0.2)';
-      ctx.fill();
-
-      // Draw connections
-      this.particles.slice(i + 1).forEach(otherParticle => {
-        const dx = particle.x - otherParticle.x;
-        const dy = particle.y - otherParticle.y;
+        const dx = otherNode.x - node.x;
+        const dy = otherNode.y - node.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 200) {
+        if (distance < 150) {
+          ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 * (1 - distance / 150)})`;
+          ctx.lineWidth = 0.5;
           ctx.beginPath();
-          ctx.moveTo(particle.x, particle.y);
-          ctx.lineTo(otherParticle.x, otherParticle.y);
-          const opacity = 0.3 * (1 - distance / 200);
-          ctx.strokeStyle = `rgba(212, 175, 55, ${opacity})`;
-          ctx.lineWidth = 1;
+          ctx.moveTo(node.x, node.y);
+          ctx.lineTo(otherNode.x, otherNode.y);
           ctx.stroke();
         }
       });
+
+      // Draw node with gradient
+      const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 4);
+      gradient.addColorStop(0, 'rgba(212, 175, 55, 0.8)');
+      gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw core
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
+      ctx.fill();
     });
 
     // Continue animation
@@ -120,11 +159,10 @@ export class TechBackgroundComponent implements OnInit, AfterViewInit, OnDestroy
   }
 }
 
-interface Particle {
+interface Node {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  radius: number;
 }
 
