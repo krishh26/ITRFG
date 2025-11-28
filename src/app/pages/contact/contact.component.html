@@ -1,0 +1,261 @@
+<!-- Success Page -->
+<div *ngIf="isSubmitted" class="relative min-h-screen">
+  <!-- Background gradient -->
+  <div class="fixed inset-0 bg-gradient-to-br from-[#0a1628] via-[#0f1f3a] to-[#1a2942]"></div>
+  
+  <!-- Tech background with world map variant -->
+  <app-tech-background variant="worldmap"></app-tech-background>
+
+  <!-- Content -->
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-32">
+    <div class="max-w-2xl w-full mx-auto text-center">
+      <!-- Success Icon -->
+      <div class="mb-8 flex justify-center">
+        <div class="w-20 h-20 rounded-full bg-[#d4af37]/20 flex items-center justify-center">
+          <svg
+            class="w-10 h-10 text-[#d4af37]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Thank You Message -->
+      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 text-white/95 leading-tight">
+        Thank You
+      </h1>
+      
+      <div class="space-y-4 mb-12">
+        <p class="text-xl md:text-2xl text-white/85 leading-relaxed">
+          Your message has been received successfully.
+        </p>
+        <p class="text-lg md:text-xl text-white/75 leading-relaxed">
+          I will review your enquiry personally and get back to you shortly.
+        </p>
+      </div>
+
+      <!-- Home Button -->
+      <button
+        (click)="navigateToHome()"
+        class="px-10 py-4 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-lg hover:transform hover:scale-[1.02]">
+        Back to Home
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto text-center py-6 border-t border-white/10 mt-20">
+      <div class="space-y-2">
+        <p class="text-sm text-white/60">
+          © 2025 ITRF (Global) Ltd · All rights reserved | Company Registered in England and Wales · Reg No [insert] | 
+          <a href="#" class="hover:text-[#d4af37] transition-colors">Privacy</a> | 
+          <a routerLink="/contact" class="hover:text-[#d4af37] transition-colors">Contact</a>
+        </p>
+        <p class="text-sm text-white/50 max-w-4xl mx-auto leading-relaxed">
+          ITRF (Global) Ltd acts as an intellectual-property originator and strategic coordination entity. Operational delivery and client engagements are executed solely by its licensed or authorised partners.
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- Contact Form Page -->
+<div *ngIf="!isSubmitted" class="relative min-h-screen">
+  <!-- Background gradient -->
+  <div class="fixed inset-0 bg-gradient-to-br from-[#0a1628] via-[#0f1f3a] to-[#1a2942]"></div>
+  
+  <!-- Tech background with world map variant -->
+  <app-tech-background variant="worldmap"></app-tech-background>
+
+  <!-- Subtle world map overlay -->
+  <div 
+    class="fixed inset-0 opacity-5"
+    style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 L20 15 L15 25 L25 30 L30 20 L40 25 L45 15 L35 10 Z M60 40 L70 45 L65 55 L75 60 L80 50 L90 55 Z' stroke='%23d4af37' fill='none' stroke-width='0.5'/%3E%3C/svg%3E&quot;); background-size: 200px 200px;">
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 px-6 py-20">
+    <div class="max-w-5xl w-full mx-auto">
+      <!-- Page Title -->
+      <h1 class="text-4xl md:text-5xl mb-4 text-center text-white/95 leading-tight">
+        Get in Touch
+      </h1>
+      
+      <!-- Intro Text -->
+      <div class="text-center mb-8 space-y-2">
+        <p class="text-base md:text-lg text-white/85 leading-relaxed">
+          If you wish to discuss collaboration, licensing or investment related to ITRFG projects, please use the form below.
+        </p>
+        <p class="text-base md:text-lg text-white/85 leading-relaxed">
+          All messages come directly to me and are reviewed personally.
+        </p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="border border-[#d4af37]/30 rounded-lg p-6 md:p-8 bg-white/5 backdrop-blur-sm shadow-lg shadow-[#d4af37]/10">
+        <form (ngSubmit)="onSubmit()" #contactFormElement="ngForm" class="space-y-4">
+          <!-- Name and Country - Two Columns -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Name -->
+            <div>
+              <label for="name" class="block text-white/90 mb-2 text-left">
+                Name <span class="text-[#d4af37]">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                [(ngModel)]="formData.name"
+                required
+                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+            </div>
+
+            <!-- Country -->
+            <div>
+              <label for="country" class="block text-white/90 mb-2 text-left">
+                Country <span class="text-[#d4af37]">*</span>
+              </label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                [(ngModel)]="formData.country"
+                required
+                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+            </div>
+          </div>
+
+          <!-- Email and Organisation - Two Columns -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-white/90 mb-2 text-left">
+                Email <span class="text-[#d4af37]">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="formData.email"
+                required
+                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+            </div>
+
+            <!-- Organisation -->
+            <div>
+              <label for="organisation" class="block text-white/90 mb-2 text-left">
+                Organisation <span class="text-white/50 text-sm">(optional)</span>
+              </label>
+              <input
+                type="text"
+                id="organisation"
+                name="organisation"
+                [(ngModel)]="formData.organisation"
+                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+            </div>
+          </div>
+
+          <!-- Radio Options -->
+          <div>
+            <label class="block text-white/90 mb-3 text-left">
+              I am looking for: <span class="text-[#d4af37]">*</span>
+            </label>
+            <div class="flex flex-wrap gap-6 pl-2">
+              <label class="flex items-center text-white/85 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="lookingFor"
+                  value="franchise"
+                  [(ngModel)]="formData.lookingFor"
+                  required
+                  class="mr-2 w-4 h-4 accent-[#d4af37]" />
+                <span>Franchise</span>
+              </label>
+              <label class="flex items-center text-white/85 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="lookingFor"
+                  value="regional-partnership"
+                  [(ngModel)]="formData.lookingFor"
+                  class="mr-2 w-4 h-4 accent-[#d4af37]" />
+                <span>Regional partnership</span>
+              </label>
+              <label class="flex items-center text-white/85 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="lookingFor"
+                  value="something-else"
+                  [(ngModel)]="formData.lookingFor"
+                  class="mr-2 w-4 h-4 accent-[#d4af37]" />
+                <span>Something else</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="block text-white/90 mb-2 text-left">
+              Message <span class="text-[#d4af37]">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              [(ngModel)]="formData.message"
+              required
+              rows="1"
+              class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors resize-none placeholder:text-white/40"></textarea>
+          </div>
+
+          <!-- Checkbox -->
+          <div>
+            <label class="flex items-start text-white/85 cursor-pointer group">
+              <input
+                type="checkbox"
+                name="understood"
+                [(ngModel)]="formData.understood"
+                class="mr-3 mt-1 w-4 h-4 accent-[#d4af37] border-[#d4af37]" />
+              <span class="flex items-start gap-2">
+                <span>I understand this form is for collaboration and partnership enquiries only.</span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="w-full px-10 py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-lg hover:transform hover:scale-[1.02]">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="text-center mt-6">
+        <p class="text-white/60 leading-relaxed text-[13px] font-bold bg-[#d4af37]/10 border border-[#d4af37]/30 px-4 py-2 rounded-lg inline-block text-[rgb(255,255,255)]">
+          For existing partner correspondence, please use the official project communication channels (e.g., TalentedStaff CRM or Spectrum IT Hub portal).
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto text-center py-6 border-t border-white/10 mt-20">
+      <div class="space-y-2">
+        <p class="text-sm text-white/60">
+          © 2025 ITRF (Global) Ltd · All rights reserved | Company Registered in England and Wales · Reg No [insert] | 
+          <a href="#" class="hover:text-[#d4af37] transition-colors">Privacy</a> | 
+          <a routerLink="/contact" class="hover:text-[#d4af37] transition-colors">Contact</a>
+        </p>
+        <p class="text-sm text-white/50 max-w-4xl mx-auto leading-relaxed">
+          ITRF (Global) Ltd acts as an intellectual-property originator and strategic coordination entity. Operational delivery and client engagements are executed solely by its licensed or authorised partners.
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
