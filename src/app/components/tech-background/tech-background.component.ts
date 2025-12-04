@@ -71,9 +71,9 @@ export class TechBackgroundComponent implements AfterViewInit, OnDestroy {
       const x = -spawnAreaWidth + Math.random() * spawnAreaWidth;
       const y = -spawnAreaHeight + Math.random() * spawnAreaHeight;
 
-      // Create velocity that tends to spread outward (right and down) - very slow speed
-      const vx = 0.05 + Math.random() * 0.08; // Very slow positive velocity (moving right)
-      const vy = 0.05 + Math.random() * 0.08; // Very slow positive velocity (moving down)
+      // Create velocity that tends to spread outward (right and down) - increased speed
+      const vx = 0.15 + Math.random() * 0.24; // Increased positive velocity (moving right)
+      const vy = 0.15 + Math.random() * 0.24; // Increased positive velocity (moving down)
 
       this.nodes.push({
         x: x,
@@ -116,8 +116,8 @@ export class TechBackgroundComponent implements AfterViewInit, OnDestroy {
         // Reset node to spawn position if it goes too far out
         node.x = -Math.random() * 200;
         node.y = -Math.random() * 200;
-        node.vx = 0.05 + Math.random() * 0.08;
-        node.vy = 0.05 + Math.random() * 0.08;
+        node.vx = 0.15 + Math.random() * 0.24;
+        node.vy = 0.15 + Math.random() * 0.24;
       }
 
       // Draw connections to other nodes
