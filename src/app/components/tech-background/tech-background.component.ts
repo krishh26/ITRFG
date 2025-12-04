@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 export class TechBackgroundComponent implements AfterViewInit, OnDestroy {
   @Input() variant: 'default' | 'worldmap' = 'default';
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  
+
   private animationFrameId?: number;
   private nodes: Node[] = [];
   private ctx?: CanvasRenderingContext2D | null;
@@ -109,7 +109,7 @@ export class TechBackgroundComponent implements AfterViewInit, OnDestroy {
         node.vy *= -1;
         node.y = canvas.height;
       }
-      
+
       // Allow nodes to enter from outside (don't bounce at top-left)
       // Only keep nodes that have entered or are still coming in
       if (node.x < -300 || node.y < -300) {
