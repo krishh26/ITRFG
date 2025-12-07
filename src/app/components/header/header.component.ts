@@ -15,5 +15,15 @@ export class HeaderComponent {
     { path: '/about', label: 'About Me', exact: false },
     { path: '/contact', label: 'Contact', exact: false }
   ];
+
+  isMobileMenuOpen = false;
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
 }
 

@@ -7,13 +7,13 @@
   <app-tech-background variant="worldmap"></app-tech-background>
 
   <!-- Content -->
-  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-32">
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-24 sm:py-32">
     <div class="max-w-2xl w-full mx-auto text-center">
       <!-- Success Icon -->
-      <div class="mb-8 flex justify-center">
-        <div class="w-20 h-20 rounded-full bg-[#d4af37]/20 flex items-center justify-center">
+      <div class="mb-6 sm:mb-8 flex justify-center">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#d4af37]/20 flex items-center justify-center">
           <svg
-            class="w-10 h-10 text-[#d4af37]"
+            class="w-8 h-8 sm:w-10 sm:h-10 text-[#d4af37]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24">
@@ -27,15 +27,15 @@
       </div>
 
       <!-- Thank You Message -->
-      <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 text-white/95 leading-tight">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-white/95 leading-tight">
         Thank You
       </h1>
 
-      <div class="space-y-4 mb-12">
-        <p class="text-xl md:text-2xl text-white/85 leading-relaxed">
+      <div class="space-y-3 sm:space-y-4 mb-8 sm:mb-12">
+        <p class="text-lg sm:text-xl md:text-2xl text-white/85 leading-relaxed">
           Your message has been received successfully.
         </p>
-        <p class="text-lg md:text-xl text-white/75 leading-relaxed">
+        <p class="text-base sm:text-lg md:text-xl text-white/75 leading-relaxed">
           I will review your enquiry personally and get back to you shortly.
         </p>
       </div>
@@ -43,7 +43,7 @@
       <!-- Home Button -->
       <button
         (click)="navigateToHome()"
-        class="px-10 py-4 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-lg hover:transform hover:scale-[1.02]">
+        class="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02]">
         Back to Home
       </button>
     </div>
@@ -68,25 +68,25 @@
   </div>
 
   <!-- Content -->
-  <div class="relative z-10 px-6 pt-20">
+  <div class="relative z-10 px-4 sm:px-6 pt-24 sm:pt-28">
     <div class="max-w-5xl w-full mx-auto">
       <!-- Page Title -->
-      <h1 class="text-4xl md:text-5xl mb-4 text-center text-white/95 leading-tight">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4 text-center text-white/95 leading-tight">
         Get in Touch
       </h1>
 
       <!-- Intro Text -->
-      <div class="text-center mb-8 space-y-2">
-        <p class="text-base md:text-lg text-white/85 leading-relaxed">
+      <div class="text-center mb-6 sm:mb-8 space-y-2">
+        <p class="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed">
           If you wish to discuss collaboration, licensing or investment related to ITRFG projects, please use the form below.
         </p>
-        <p class="text-base md:text-lg text-white/85 leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-white/85 leading-relaxed">
           All messages come directly to me and are reviewed personally.
         </p>
       </div>
 
       <!-- Form Container -->
-      <div class="border border-[#d4af37]/30 rounded-lg p-6 md:p-8 bg-white/5 backdrop-blur-sm shadow-lg shadow-[#d4af37]/10">
+      <div class="border border-[#d4af37]/30 rounded-lg p-4 sm:p-6 md:p-8 bg-white/5 backdrop-blur-sm shadow-lg shadow-[#d4af37]/10">
         <form (ngSubmit)="onSubmit()" #contactFormElement="ngForm" class="space-y-4">
           <!-- Name and Country - Two Columns -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,11 +151,11 @@
 
           <!-- Radio Options -->
           <div>
-            <label class="block text-white/90 mb-3 text-left">
+            <label class="block text-white/90 mb-3 text-left text-sm sm:text-base">
               I am looking for: <span class="text-[#d4af37]">*</span>
             </label>
-            <div class="flex flex-wrap gap-6 pl-2">
-              <label class="flex items-center text-white/85 cursor-pointer group">
+            <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-6 pl-2">
+              <label class="flex items-center text-white/85 cursor-pointer group text-sm sm:text-base">
                 <input
                   type="radio"
                   name="lookingFor"
@@ -165,7 +165,7 @@
                   class="mr-2 w-4 h-4 accent-[#d4af37]" />
                 <span>Franchise</span>
               </label>
-              <label class="flex items-center text-white/85 cursor-pointer group">
+              <label class="flex items-center text-white/85 cursor-pointer group text-sm sm:text-base">
                 <input
                   type="radio"
                   name="lookingFor"
@@ -174,7 +174,7 @@
                   class="mr-2 w-4 h-4 accent-[#d4af37]" />
                 <span>Regional partnership</span>
               </label>
-              <label class="flex items-center text-white/85 cursor-pointer group">
+              <label class="flex items-center text-white/85 cursor-pointer group text-sm sm:text-base">
                 <input
                   type="radio"
                   name="lookingFor"
@@ -202,12 +202,12 @@
 
           <!-- Checkbox -->
           <div>
-            <label class="flex items-start text-white/85 cursor-pointer group">
+            <label class="flex items-start text-white/85 cursor-pointer group text-sm sm:text-base">
               <input
                 type="checkbox"
                 name="understood"
                 [(ngModel)]="formData.understood"
-                class="mr-3 mt-1 w-4 h-4 accent-[#d4af37] border-[#d4af37]" />
+                class="mr-2 sm:mr-3 mt-1 w-4 h-4 accent-[#d4af37] border-[#d4af37]" />
               <span class="flex items-start gap-2">
                 <span>I understand this form is for collaboration and partnership enquiries only.</span>
               </span>
@@ -218,7 +218,7 @@
           <div class="pt-2">
             <button
               type="submit"
-              class="w-full px-10 py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-lg hover:transform hover:scale-[1.02]">
+              class="w-full px-8 sm:px-10 py-3 sm:py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02]">
               Submit
             </button>
           </div>
@@ -226,8 +226,8 @@
       </div>
 
       <!-- Footer Note -->
-      <div class="text-center mt-6">
-        <p class="text-white/60 leading-relaxed text-[13px] font-bold bg-[#d4af37]/10 border border-[#d4af37]/30 px-4 py-2 rounded-lg inline-block text-[rgb(255,255,255)]">
+      <div class="text-center mt-4 sm:mt-6 px-2">
+        <p class="text-white/60 leading-relaxed text-xs sm:text-[13px] font-bold bg-[#d4af37]/10 border border-[#d4af37]/30 px-3 sm:px-4 py-2 rounded-lg inline-block text-[rgb(255,255,255)]">
           For existing partner correspondence, please use the official project communication channels.
         </p>
       </div>
