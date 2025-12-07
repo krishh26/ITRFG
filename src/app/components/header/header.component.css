@@ -1,0 +1,8 @@
+/* Header component styles */
+
+/* Active navigation link */
+.nav-link.active {
+  color: #d4af37 !important;
+  font-weight: 600;
+}
+

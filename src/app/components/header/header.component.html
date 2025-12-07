@@ -1,0 +1,22 @@
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a1628]/80 backdrop-blur-sm border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <a routerLink="/" class="text-xl tracking-wide text-white/90 hover:text-[#d4af37] transition-colors duration-300">
+        ITRF (Global) Ltd
+      </a>
+      <div class="flex gap-8">
+        @for (link of navLinks; track link.path) {
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: link.exact}"
+            class="nav-link text-white/60 hover:text-white transition-colors duration-300"
+          >
+            {{ link.label }}
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
+
