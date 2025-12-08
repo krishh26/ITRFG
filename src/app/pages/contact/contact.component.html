@@ -88,24 +88,67 @@
       <!-- Form Container -->
       <div class="border border-[#d4af37]/30 rounded-lg p-4 sm:p-6 md:p-8 bg-white/5 backdrop-blur-sm shadow-lg shadow-[#d4af37]/10">
         <form (ngSubmit)="onSubmit()" #contactFormElement="ngForm" class="space-y-4">
-          <!-- Name and Country - Two Columns -->
+          <!-- First Name and Last Name - Two Columns -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Name -->
+            <!-- First Name -->
             <div>
-              <label for="name" class="block text-white/90 mb-2 text-left">
-                Name <span class="text-[#d4af37]">*</span>
+              <label for="firstName" class="block text-white/90 mb-2 text-left">
+                First Name <span class="text-[#d4af37]">*</span>
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                [(ngModel)]="formData.name"
-                #nameInput="ngModel"
+                id="firstName"
+                name="firstName"
+                [(ngModel)]="formData.firstName"
+                #firstNameInput="ngModel"
                 required
                 class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
-                [ngClass]="{'border-white/30': !nameInput.invalid || !nameInput.touched, 'border-red-500': nameInput.invalid && nameInput.touched}" />
-              <div *ngIf="nameInput.invalid && nameInput.touched" class="text-red-400 text-sm mt-1">
-                Name is required
+                [ngClass]="{'border-white/30': !firstNameInput.invalid || !firstNameInput.touched, 'border-red-500': firstNameInput.invalid && firstNameInput.touched}" />
+              <div *ngIf="firstNameInput.invalid && firstNameInput.touched" class="text-red-400 text-sm mt-1">
+                First name is required
+              </div>
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label for="lastName" class="block text-white/90 mb-2 text-left">
+                Last Name <span class="text-[#d4af37]">*</span>
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                [(ngModel)]="formData.lastName"
+                #lastNameInput="ngModel"
+                required
+                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
+                [ngClass]="{'border-white/30': !lastNameInput.invalid || !lastNameInput.touched, 'border-red-500': lastNameInput.invalid && lastNameInput.touched}" />
+              <div *ngIf="lastNameInput.invalid && lastNameInput.touched" class="text-red-400 text-sm mt-1">
+                Last name is required
+              </div>
+            </div>
+          </div>
+
+          <!-- Email and Country - Two Columns -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-white/90 mb-2 text-left">
+                Email <span class="text-[#d4af37]">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="formData.email"
+                #emailInput="ngModel"
+                required
+                email
+                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
+                [ngClass]="{'border-white/30': !emailInput.invalid || !emailInput.touched, 'border-red-500': emailInput.invalid && emailInput.touched}" />
+              <div *ngIf="emailInput.invalid && emailInput.touched" class="text-red-400 text-sm mt-1">
+                <span *ngIf="emailInput.errors?.['required']">Email is required</span>
+                <span *ngIf="emailInput.errors?.['email'] && !emailInput.errors?.['required']">Please enter a valid email</span>
               </div>
             </div>
 
@@ -129,41 +172,17 @@
             </div>
           </div>
 
-          <!-- Email and Organisation - Two Columns -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Email -->
-            <div>
-              <label for="email" class="block text-white/90 mb-2 text-left">
-                Email <span class="text-[#d4af37]">*</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                [(ngModel)]="formData.email"
-                #emailInput="ngModel"
-                required
-                email
-                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
-                [ngClass]="{'border-white/30': !emailInput.invalid || !emailInput.touched, 'border-red-500': emailInput.invalid && emailInput.touched}" />
-              <div *ngIf="emailInput.invalid && emailInput.touched" class="text-red-400 text-sm mt-1">
-                <span *ngIf="emailInput.errors?.['required']">Email is required</span>
-                <span *ngIf="emailInput.errors?.['email'] && !emailInput.errors?.['required']">Please enter a valid email</span>
-              </div>
-            </div>
-
-            <!-- Organisation -->
-            <div>
-              <label for="organisation" class="block text-white/90 mb-2 text-left">
-                Organisation <span class="text-white/50 text-sm">(optional)</span>
-              </label>
-              <input
-                type="text"
-                id="organisation"
-                name="organisation"
-                [(ngModel)]="formData.organisation"
-                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
-            </div>
+          <!-- Organisation -->
+          <div>
+            <label for="organisation" class="block text-white/90 mb-2 text-left">
+              Organisation <span class="text-white/50 text-sm">(optional)</span>
+            </label>
+            <input
+              type="text"
+              id="organisation"
+              name="organisation"
+              [(ngModel)]="formData.organisation"
+              class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
           </div>
 
           <!-- Radio Options -->
@@ -249,11 +268,12 @@
           <div class="pt-2">
             <button
               type="submit"
-              [disabled]="!formData.understood || contactFormElement.invalid"
-              [class.opacity-50]="!formData.understood || contactFormElement.invalid"
-              [class.cursor-not-allowed]="!formData.understood || contactFormElement.invalid"
+              [disabled]="!formData.understood || contactFormElement.invalid || isSubmitting"
+              [class.opacity-50]="!formData.understood || contactFormElement.invalid || isSubmitting"
+              [class.cursor-not-allowed]="!formData.understood || contactFormElement.invalid || isSubmitting"
               class="w-full px-8 sm:px-10 py-3 sm:py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02] disabled:hover:scale-100 disabled:hover:shadow-none">
-              Submit
+              <span *ngIf="!isSubmitting">Submit</span>
+              <span *ngIf="isSubmitting">Submitting...</span>
             </button>
           </div>
         </form>
