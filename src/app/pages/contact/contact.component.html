@@ -100,8 +100,13 @@
                 id="name"
                 name="name"
                 [(ngModel)]="formData.name"
+                #nameInput="ngModel"
                 required
-                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
+                [ngClass]="{'border-white/30': !nameInput.invalid || !nameInput.touched, 'border-red-500': nameInput.invalid && nameInput.touched}" />
+              <div *ngIf="nameInput.invalid && nameInput.touched" class="text-red-400 text-sm mt-1">
+                Name is required
+              </div>
             </div>
 
             <!-- Country -->
@@ -114,8 +119,13 @@
                 id="country"
                 name="country"
                 [(ngModel)]="formData.country"
+                #countryInput="ngModel"
                 required
-                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
+                [ngClass]="{'border-white/30': !countryInput.invalid || !countryInput.touched, 'border-red-500': countryInput.invalid && countryInput.touched}" />
+              <div *ngIf="countryInput.invalid && countryInput.touched" class="text-red-400 text-sm mt-1">
+                Country is required
+              </div>
             </div>
           </div>
 
@@ -131,8 +141,15 @@
                 id="email"
                 name="email"
                 [(ngModel)]="formData.email"
+                #emailInput="ngModel"
                 required
-                class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors placeholder:text-white/40" />
+                email
+                class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors placeholder:text-white/40 focus:border-[#d4af37]"
+                [ngClass]="{'border-white/30': !emailInput.invalid || !emailInput.touched, 'border-red-500': emailInput.invalid && emailInput.touched}" />
+              <div *ngIf="emailInput.invalid && emailInput.touched" class="text-red-400 text-sm mt-1">
+                <span *ngIf="emailInput.errors?.['required']">Email is required</span>
+                <span *ngIf="emailInput.errors?.['email'] && !emailInput.errors?.['required']">Please enter a valid email</span>
+              </div>
             </div>
 
             <!-- Organisation -->
@@ -161,6 +178,7 @@
                   name="lookingFor"
                   value="franchise"
                   [(ngModel)]="formData.lookingFor"
+                  #lookingForInput="ngModel"
                   required
                   class="mr-2 w-4 h-4 accent-[#d4af37]" />
                 <span>Franchise</span>
@@ -184,6 +202,9 @@
                 <span>Something else</span>
               </label>
             </div>
+            <div *ngIf="lookingForInput.invalid && lookingForInput.touched" class="text-red-400 text-sm mt-1 pl-2">
+              Please select an option
+            </div>
           </div>
 
           <!-- Message -->
@@ -195,9 +216,14 @@
               id="message"
               name="message"
               [(ngModel)]="formData.message"
+              #messageInput="ngModel"
               required
               rows="6"
-              class="w-full px-4 py-2.5 bg-transparent border border-white/30 rounded-lg text-white focus:border-[#d4af37] focus:outline-none transition-colors resize-y placeholder:text-white/40"></textarea>
+              class="w-full px-4 py-2.5 bg-transparent border rounded-lg text-white focus:outline-none transition-colors resize-y placeholder:text-white/40 focus:border-[#d4af37]"
+              [ngClass]="{'border-white/30': !messageInput.invalid || !messageInput.touched, 'border-red-500': messageInput.invalid && messageInput.touched}"></textarea>
+            <div *ngIf="messageInput.invalid && messageInput.touched" class="text-red-400 text-sm mt-1">
+              Message is required
+            </div>
           </div>
 
           <!-- Checkbox -->
@@ -207,18 +233,26 @@
                 type="checkbox"
                 name="understood"
                 [(ngModel)]="formData.understood"
+                #understoodInput="ngModel"
+                required
                 class="mr-2 sm:mr-3 mt-1 w-4 h-4 accent-[#d4af37] border-[#d4af37]" />
               <span class="flex items-start gap-2">
-                <span>I understand this form is for collaboration and partnership enquiries only.</span>
+                <span>I understand this form is for collaboration and partnership enquiries only. <span class="text-[#d4af37]">*</span></span>
               </span>
             </label>
+            <div *ngIf="understoodInput.invalid && understoodInput.touched" class="text-red-400 text-sm mt-1 pl-6">
+              Please confirm your understanding
+            </div>
           </div>
 
           <!-- Submit Button -->
           <div class="pt-2">
             <button
               type="submit"
-              class="w-full px-8 sm:px-10 py-3 sm:py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02]">
+              [disabled]="!formData.understood || contactFormElement.invalid"
+              [class.opacity-50]="!formData.understood || contactFormElement.invalid"
+              [class.cursor-not-allowed]="!formData.understood || contactFormElement.invalid"
+              class="w-full px-8 sm:px-10 py-3 sm:py-3.5 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02] disabled:hover:scale-100 disabled:hover:shadow-none">
               Submit
             </button>
           </div>
