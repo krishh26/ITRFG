@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { TechBackgroundComponent } from '../../components/tech-background/tech-background.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 
@@ -14,9 +15,11 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class ContactComponent {
   isSubmitted = false;
+  isSubmitting = false;
   
   formData = {
-    name: '',
+    firstName: '',
+    lastName: '',
     country: '',
     email: '',
     organisation: '',
@@ -25,7 +28,9 @@ export class ContactComponent {
     understood: false
   };
 
-  constructor(private router: Router) {}
+  private apiUrl = 'http://localhost:5000/contact';
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   onSubmit() {
     if (!this.formData.understood) {
@@ -33,14 +38,46 @@ export class ContactComponent {
       return;
     }
     
-    console.log('Form submitted:', this.formData);
-    
-    // Show success page
-    this.isSubmitted = true;
-    
-    // Reset form
+    // Prevent multiple submissions
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    // Prepare API payload
+    const payload = {
+      firstName: this.formData.firstName,
+      lastName: this.formData.lastName,
+      email: this.formData.email,
+      country: this.formData.country,
+      organisation: this.formData.organisation,
+      lookingFor: this.formData.lookingFor,
+      message: this.formData.message
+    };
+
+    // Call API
+    this.http.post(this.apiUrl, payload).subscribe({
+      next: (response) => {
+        console.log('Form submitted successfully:', response);
+        this.isSubmitting = false;
+        // Show success page
+        this.isSubmitted = true;
+        // Reset form
+        this.resetForm();
+      },
+      error: (error) => {
+        console.error('Error submitting form:', error);
+        this.isSubmitting = false;
+        alert('There was an error submitting your form. Please try again later.');
+      }
+    });
+  }
+
+  resetForm() {
     this.formData = {
-      name: '',
+      firstName: '',
+      lastName: '',
       country: '',
       email: '',
       organisation: '',
