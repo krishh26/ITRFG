@@ -16,7 +16,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 export class ContactComponent {
   isSubmitted = false;
   isSubmitting = false;
-  
+
   formData = {
     firstName: '',
     lastName: '',
@@ -28,7 +28,7 @@ export class ContactComponent {
     understood: false
   };
 
-  private apiUrl = 'http://localhost:5000/contact';
+  private apiUrl = 'https://api.itrfg.com/contact';
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -37,7 +37,7 @@ export class ContactComponent {
       alert('Please confirm that you understand this form is for collaboration and partnership enquiries only.');
       return;
     }
-    
+
     // Prevent multiple submissions
     if (this.isSubmitting) {
       return;
