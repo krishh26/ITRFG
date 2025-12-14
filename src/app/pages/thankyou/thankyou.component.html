@@ -1,0 +1,53 @@
+<div class="relative min-h-screen">
+  <!-- Background gradient -->
+  <div class="fixed inset-0 bg-gradient-to-br from-[#0a1628] via-[#0f1f3a] to-[#1a2942]"></div>
+
+  <!-- Tech background with world map variant -->
+  <app-tech-background variant="worldmap"></app-tech-background>
+
+  <!-- Content -->
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-24 sm:py-32">
+    <div class="max-w-2xl w-full mx-auto text-center">
+      <!-- Success Icon -->
+      <div class="mb-6 sm:mb-8 flex justify-center">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#d4af37]/20 flex items-center justify-center">
+          <svg
+            class="w-8 h-8 sm:w-10 sm:h-10 text-[#d4af37]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Thank You Message -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-white/95 leading-tight">
+        Thank You
+      </h1>
+
+      <div class="space-y-3 sm:space-y-4 mb-8 sm:mb-12">
+        <p class="text-lg sm:text-xl md:text-2xl text-white/85 leading-relaxed">
+          Your message has been received successfully.
+        </p>
+        <p class="text-base sm:text-lg md:text-xl text-white/75 leading-relaxed">
+          I will review your enquiry personally and get back to you shortly.
+        </p>
+      </div>
+
+      <!-- Home Button -->
+      <button
+        (click)="navigateToHome()"
+        class="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-[#d4af37] to-[#f0d46e] text-[#0a1628] rounded-lg hover:shadow-lg hover:shadow-[#d4af37]/30 transition-all duration-300 text-base sm:text-lg hover:transform hover:scale-[1.02]">
+        Back to Home
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+</div>

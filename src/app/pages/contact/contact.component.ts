@@ -14,7 +14,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  isSubmitted = false;
   isSubmitting = false;
 
   formData = {
@@ -61,10 +60,10 @@ export class ContactComponent {
       next: (response) => {
         console.log('Form submitted successfully:', response);
         this.isSubmitting = false;
-        // Show success page
-        this.isSubmitted = true;
         // Reset form
         this.resetForm();
+        // Navigate to thank you page
+        this.router.navigate(['/thankyou']);
       },
       error: (error) => {
         console.error('Error submitting form:', error);
@@ -85,9 +84,5 @@ export class ContactComponent {
       lookingFor: '',
       understood: false
     };
-  }
-
-  navigateToHome() {
-    this.router.navigate(['/']);
   }
 }
